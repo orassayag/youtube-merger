@@ -12,3 +12,4 @@ minimumReleaseAgeExclude:
   - '@vitest/ui@4.1.7'
   - '@vitest/utils@4.1.7'
   - vitest@4.1.7
+  - googleapis@173.0.0
