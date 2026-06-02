@@ -24,7 +24,7 @@ describe('migratePlaylists', () => {
   beforeEach(() => {
     vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    
+
     mockYoutube = {
       playlists: {
         insert: vi.fn(),
@@ -42,12 +42,12 @@ describe('migratePlaylists', () => {
   it('migrates playlists successfully', async () => {
     const playlists = new Map([['PL1', ['v1', 'v2']]]);
     vi.mocked(parsePlaylists).mockReturnValue(playlists);
-    
+
     // First call to withRetry: create playlist
     vi.mocked(withRetry)
-      .mockResolvedValueOnce({ 
-        status: 'success', 
-        data: { data: { id: 'new_pl_id' } } 
+      .mockResolvedValueOnce({
+        status: 'success',
+        data: { data: { id: 'new_pl_id' } },
       } as ApiResult<unknown>)
       // Subsequent calls: add videos
       .mockResolvedValue({ status: 'success', data: {} } as ApiResult<unknown>);
@@ -69,35 +69,39 @@ describe('migratePlaylists', () => {
   it('handles playlist creation failure', async () => {
     const playlists = new Map([['PL1', ['v1']]]);
     vi.mocked(parsePlaylists).mockReturnValue(playlists);
-    
-    vi.mocked(withRetry).mockResolvedValue({ 
-      status: 'failed', 
-      error: new Error('fail') 
+
+    vi.mocked(withRetry).mockResolvedValue({
+      status: 'failed',
+      error: new Error('fail'),
     } as ApiResult<unknown>);
 
     await migratePlaylists(mockYoutube);
 
-    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Could not create playlist "PL1"'));
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('Could not create playlist "PL1"')
+    );
   });
 
   it('handles duplicates and failures when adding videos', async () => {
     const playlists = new Map([['PL1', ['v1', 'v2', 'v3']]]);
     vi.mocked(parsePlaylists).mockReturnValue(playlists);
-    
+
     vi.mocked(withRetry)
-      .mockResolvedValueOnce({ 
-        status: 'success', 
-        data: { data: { id: 'pl_id' } } 
+      .mockResolvedValueOnce({
+        status: 'success',
+        data: { data: { id: 'pl_id' } },
       } as ApiResult<unknown>)
       .mockResolvedValueOnce({ status: 'success', data: {} } as ApiResult<unknown>)
       .mockResolvedValueOnce({ status: 'duplicate' } as ApiResult<unknown>)
-      .mockResolvedValueOnce({ 
-        status: 'failed', 
-        error: new Error('fail') 
+      .mockResolvedValueOnce({
+        status: 'failed',
+        error: new Error('fail'),
       } as ApiResult<unknown>);
 
     await migratePlaylists(mockYoutube);
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('"PL1": 1/3 videos added (1 dup, 1 failed)'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('"PL1": 1/3 videos added (1 dup, 1 failed)')
+    );
   });
 });

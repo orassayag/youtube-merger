@@ -41,10 +41,10 @@ describe('retry utils', () => {
       };
 
       const promise = withRetry(fn, 'op', 2);
-      
+
       // Wait for first attempt and 403 check
       await vi.runAllTimersAsync();
-      
+
       const r = await promise;
       expect(r).toEqual({ status: 'success', data: 'ok' });
       expect(calls).toBe(2);
@@ -61,26 +61,32 @@ describe('retry utils', () => {
 
       const promise = withRetry(fn, 'op', 2);
       await vi.runAllTimersAsync();
-      
+
       const r = await promise;
       expect(r).toEqual({ status: 'success', data: 'ok' });
       expect(calls).toBe(2);
-      expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('Error on "op" (attempt 1): fail'));
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Error on "op" (attempt 1): fail')
+      );
     });
 
     it('returns failed after all retries exhausted', async () => {
       const err = new Error('dead');
-      const fn = async () => { throw err; };
+      const fn = async () => {
+        throw err;
+      };
 
       const promise = withRetry(fn, 'op', 2);
       await vi.runAllTimersAsync();
-      
+
       const r = await promise;
       expect(r).toEqual({ status: 'failed', error: err });
     });
 
     it('handles non-Error objects in error message', async () => {
-      const fn = async () => { throw 'string error'; };
+      const fn = async () => {
+        throw 'string error';
+      };
       const promise = withRetry(fn, 'op', 1);
       await vi.runAllTimersAsync();
       const r = await promise;
@@ -89,7 +95,9 @@ describe('retry utils', () => {
     });
 
     it('handles null/undefined response in getErrorStatus', async () => {
-      const fn = async () => { throw { response: null }; };
+      const fn = async () => {
+        throw { response: null };
+      };
       const promise = withRetry(fn, 'op', 1);
       await vi.runAllTimersAsync();
       const r = await promise;

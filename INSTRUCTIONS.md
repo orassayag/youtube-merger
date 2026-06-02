@@ -59,17 +59,17 @@ User Input (config.ts)
 
 ### Module Responsibilities
 
-| Module | Responsibility | Key exports |
-|--------|----------------|-------------|
-| `main.ts` | Entry, credential check, orchestration | `main()` |
-| `config.ts` | Paths, feature flags, `rateLimitDelay` | `CONFIG` |
-| `auth/oauth.ts` | Load client secrets, token refresh, first-run code exchange | `authenticate()` |
-| `parsers/takeoutCsv.ts` | Parse Takeout CSVs | `parseSubscriptions`, `parsePlaylists`, `parseLikedVideos` (optional `takeoutRoot` for tests) |
-| `api/retry.ts` | Backoff, 409 duplicate handling, 403 quota wait | `delay`, `withRetry` |
-| `migrate/subscriptions.ts` | `subscriptions.insert` loop | `migrateSubscriptions` |
-| `migrate/playlists.ts` | Create playlist + `playlistItems.insert` | `migratePlaylists` |
-| `migrate/likedVideos.ts` | `videos.rate` like | `migrateLikedVideos` |
-| `types/index.ts` | Shared types | `Subscription`, `ApiResult` |
+| Module                     | Responsibility                                              | Key exports                                                                                   |
+| -------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `main.ts`                  | Entry, credential check, orchestration                      | `main()`                                                                                      |
+| `config.ts`                | Paths, feature flags, `rateLimitDelay`                      | `CONFIG`                                                                                      |
+| `auth/oauth.ts`            | Load client secrets, token refresh, first-run code exchange | `authenticate()`                                                                              |
+| `parsers/takeoutCsv.ts`    | Parse Takeout CSVs                                          | `parseSubscriptions`, `parsePlaylists`, `parseLikedVideos` (optional `takeoutRoot` for tests) |
+| `api/retry.ts`             | Backoff, 409 duplicate handling, 403 quota wait             | `delay`, `withRetry`                                                                          |
+| `migrate/subscriptions.ts` | `subscriptions.insert` loop                                 | `migrateSubscriptions`                                                                        |
+| `migrate/playlists.ts`     | Create playlist + `playlistItems.insert`                    | `migratePlaylists`                                                                            |
+| `migrate/likedVideos.ts`   | `videos.rate` like                                          | `migrateLikedVideos`                                                                          |
+| `types/index.ts`           | Shared types                                                | `Subscription`, `ApiResult`                                                                   |
 
 ### Data Flow
 
@@ -316,11 +316,13 @@ Ensure `credentials.json` is present at runtime if you run `dist/main.js` from t
 ### Release Process
 
 1. **Version bump**
+
    ```bash
    npm version patch
    ```
 
 2. **Build and test**
+
    ```bash
    pnpm build
    pnpm test
@@ -328,6 +330,7 @@ Ensure `credentials.json` is present at runtime if you run `dist/main.js` from t
    ```
 
 3. **Commit and tag**
+
    ```bash
    git add .
    git commit -m "chore: release v1.x.x"

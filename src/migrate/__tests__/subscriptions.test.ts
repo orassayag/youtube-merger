@@ -20,7 +20,7 @@ describe('migrateSubscriptions', () => {
   beforeEach(() => {
     vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
-    
+
     mockYoutube = {
       subscriptions: {
         insert: vi.fn(),
@@ -43,7 +43,9 @@ describe('migrateSubscriptions', () => {
     await migrateSubscriptions(mockYoutube, subscriptions);
 
     expect(withRetry).toHaveBeenCalledTimes(2);
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('2 added, 0 skipped, 0 failed'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('2 added, 0 skipped, 0 failed')
+    );
   });
 
   it('handles duplicates', async () => {
@@ -53,16 +55,23 @@ describe('migrateSubscriptions', () => {
 
     await migrateSubscriptions(mockYoutube, subscriptions);
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('0 added, 1 skipped, 0 failed'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('0 added, 1 skipped, 0 failed')
+    );
   });
 
   it('handles failures', async () => {
     const subscriptions = [{ channelId: 'UC1', channelTitle: 'Chan 1', channelUrl: 'url1' }];
 
-    vi.mocked(withRetry).mockResolvedValue({ status: 'failed', error: new Error('fail') } as ApiResult<unknown>);
+    vi.mocked(withRetry).mockResolvedValue({
+      status: 'failed',
+      error: new Error('fail'),
+    } as ApiResult<unknown>);
 
     await migrateSubscriptions(mockYoutube, subscriptions);
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('0 added, 0 skipped, 1 failed'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('0 added, 0 skipped, 1 failed')
+    );
   });
 });

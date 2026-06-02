@@ -1,28 +1,2 @@
 allowBuilds:
   esbuild: true
-minimumReleaseAgeExclude:
-  - '@types/node@25.9.1'
-  - '@vitest/coverage-istanbul@4.1.7'
-  - '@vitest/expect@4.1.7'
-  - '@vitest/mocker@4.1.7'
-  - '@vitest/pretty-format@4.1.7'
-  - '@vitest/runner@4.1.7'
-  - '@vitest/snapshot@4.1.7'
-  - '@vitest/spy@4.1.7'
-  - '@vitest/ui@4.1.7'
-  - '@vitest/utils@4.1.7'
-  - vitest@4.1.7
-  - googleapis@173.0.0
-  - '@eslint/plugin-kit@0.7.2'
-  - eslint@10.4.1
-  - '@vitest/coverage-istanbul@4.1.8'
-  - '@vitest/expect@4.1.8'
-  - '@vitest/mocker@4.1.8'
-  - '@vitest/pretty-format@4.1.8'
-  - '@vitest/runner@4.1.8'
-  - '@vitest/snapshot@4.1.8'
-  - '@vitest/spy@4.1.8'
-  - '@vitest/ui@4.1.8'
-  - '@vitest/utils@4.1.8'
-  - tsx@4.22.4
-  - vitest@4.1.8

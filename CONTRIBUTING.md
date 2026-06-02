@@ -56,22 +56,26 @@ Unsure where to begin? Look for issues labeled:
 ## Development Setup
 
 1. **Fork and clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/youtube-merger.git
    cd youtube-merger
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Build the project**
+
    ```bash
    pnpm build
    ```
 
 4. **Run tests**
+
    ```bash
    pnpm test
    ```
@@ -248,20 +252,24 @@ Fixes #456
 
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Tests pass locally
 - [ ] Added/updated tests
 - [ ] Tested manually (describe scope — no secrets)
 
 ## Checklist
+
 - [ ] Code follows project style guidelines
 - [ ] Self-review completed
 - [ ] Comments added for complex logic
