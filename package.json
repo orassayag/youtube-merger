@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "csv-parse": "^6.2.1",
-    "google-auth-library": "^10.6.2",
+    "google-auth-library": "^10.7.0",
     "googleapis": "^173.0.0"
   },
   "devDependencies": {
