@@ -1,21 +1,26 @@
 import type { youtube_v3 } from 'googleapis';
-import { CONFIG } from '../config.js';
-import { delay, withRetry } from '../api/retry.js';
-import { parsePlaylists } from '../parsers/takeoutCsv.js';
+import { CONFIG } from '../index.js';
+import { delay, withRetry } from '../api/index.js';
+import { parsePlaylists } from '../parsers/index.js';
 
 async function migratePlaylist(
   youtube: youtube_v3.Youtube,
   name: string,
   videoIds: string[]
 ): Promise<void> {
-  console.log(`\n  📁 Creating playlist "${name}" (${videoIds.length} videos)...`);
+  console.log(
+    `\n  📁 Creating playlist "${name}" (${videoIds.length} videos)...`
+  );
 
   const createResult = await withRetry(
     () =>
       youtube.playlists.insert({
         part: ['snippet', 'status'],
         requestBody: {
-          snippet: { title: name, description: 'Imported from YouTube Takeout' },
+          snippet: {
+            title: name,
+            description: 'Imported from YouTube Takeout',
+          },
           status: { privacyStatus: 'private' },
         },
       }),
@@ -60,7 +65,9 @@ async function migratePlaylist(
   );
 }
 
-export async function migratePlaylists(youtube: youtube_v3.Youtube): Promise<void> {
+export async function migratePlaylists(
+  youtube: youtube_v3.Youtube
+): Promise<void> {
   const playlists = parsePlaylists();
   if (playlists.size === 0) {
     console.log('\n⏭️  No playlists to migrate.');

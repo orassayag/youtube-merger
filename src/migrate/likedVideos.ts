@@ -1,9 +1,11 @@
 import type { youtube_v3 } from 'googleapis';
-import { CONFIG } from '../config.js';
-import { delay, withRetry } from '../api/retry.js';
-import { parseLikedVideos } from '../parsers/takeoutCsv.js';
+import { CONFIG } from '../index.js';
+import { delay, withRetry } from '../api/index.js';
+import { parseLikedVideos } from '../parsers/index.js';
 
-export async function migrateLikedVideos(youtube: youtube_v3.Youtube): Promise<void> {
+export async function migrateLikedVideos(
+  youtube: youtube_v3.Youtube
+): Promise<void> {
   const videoIds = parseLikedVideos();
   if (videoIds.length === 0) {
     console.log('\n⏭️  No liked videos to migrate.');

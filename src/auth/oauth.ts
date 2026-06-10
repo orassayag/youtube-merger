@@ -1,13 +1,20 @@
 import * as fs from 'node:fs';
 import * as readline from 'node:readline';
 import { google } from 'googleapis';
-import type { OAuth2Client } from 'google-auth-library';
-import { CONFIG } from '../config.js';
+import { CONFIG } from '../index.js';
 
-export async function authenticate(): Promise<OAuth2Client> {
-  const credentials = JSON.parse(fs.readFileSync(CONFIG.credentialsPath, 'utf-8'));
+export async function authenticate(): Promise<
+  InstanceType<typeof google.auth.OAuth2>
+> {
+  const credentials = JSON.parse(
+    fs.readFileSync(CONFIG.credentialsPath, 'utf-8')
+  );
   const { client_secret, client_id, redirect_uris } = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  const oAuth2Client = new google.auth.OAuth2(
+    client_id,
+    client_secret,
+    redirect_uris[0]
+  );
 
   if (fs.existsSync(CONFIG.tokenPath)) {
     const token = JSON.parse(fs.readFileSync(CONFIG.tokenPath, 'utf-8'));
@@ -28,7 +35,10 @@ export async function authenticate(): Promise<OAuth2Client> {
   console.log(authUrl);
   console.log();
 
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
   const code = await new Promise<string>((resolve) =>
     rl.question('Enter the authorization code from that page: ', (ans) => {
       rl.close();

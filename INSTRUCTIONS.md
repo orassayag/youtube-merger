@@ -6,12 +6,19 @@ This document provides detailed instructions for developers working on the YouTu
 
 - [Project Overview](#project-overview)
 - [Architecture](#architecture)
-- [Setup Instructions](#setup-instructions)
+- [System Requirements](#system-requirements)
+- [Setup and Usage Instructions](#setup-and-usage-instructions)
 - [Development Workflow](#development-workflow)
 - [Module Documentation](#module-documentation)
 - [Testing Strategy](#testing-strategy)
+- [Available Commands](#available-commands)
+- [Development Commands](#development-commands)
+- [Running Scripts](#running-scripts)
+- [Extending the Application](#extending-the-application)
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
+- [External Resources](#external-resources)
+- [Last Updated](#last-updated)
 
 ## Project Overview
 
@@ -79,33 +86,74 @@ User Input (config.ts)
 4. **Migration** (`migrate/*`) — For each entity, call the API through `withRetry`, then `delay(CONFIG.rateLimitDelay)`.
 5. **Console** — Progress and summaries printed to stdout/stderr.
 
-## Setup Instructions
+## System Requirements
+
+- **Node.js**: Version 20 or higher
+- **Package Manager**: pnpm 8+
+- **Operating System**: macOS, Linux, or Windows
+- **Memory**: 2GB RAM minimum
+- **Disk Space**: 500MB for application and dependencies
+
+## Setup and Usage Instructions
 
 ### Prerequisites
 
-- **Node.js** v18.0.0 or higher
+- **Node.js** v20.0.0 or higher
 - **pnpm** v8.0.0 or higher
 - **Git** for version control
 - **Google Cloud** project with YouTube Data API v3 enabled and OAuth **Desktop** client JSON
 
 ### Initial Setup
 
+#### 1. Install Dependencies
+
+**Using pnpm (recommended):**
+
 ```bash
-# 1. Clone the repository
-git clone https://github.com/orassayag/youtube-merger.git
-cd youtube-merger
-
-# 2. Install dependencies
 pnpm install
+```
 
-# 3. Place OAuth client JSON as credentials.json (do not commit)
+**Verify installation:**
 
-# 4. Build the project
+```bash
 pnpm build
+```
 
-# 5. Verify setup
-pnpm test
-pnpm lint
+#### 2. Google Cloud Console Setup
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/) and create or select a project.
+2. Enable **YouTube Data API v3**.
+3. Create **OAuth 2.0 Client ID** credentials of type **Desktop app**.
+4. Download the JSON and save it as `credentials.json` in the project root.
+
+#### 3. Configuration
+
+Edit `src/config.ts`:
+
+```typescript
+export const CONFIG = {
+  credentialsPath: './credentials.json',
+  tokenPath: './token.json',
+  takeoutPath: './Takeout/YouTube and YouTube Music',
+  migrate: {
+    subscriptions: true,
+    playlists: true,
+    likedVideos: true,
+  },
+  rateLimitDelay: 500,
+} as const;
+```
+
+**Security:** Never commit `credentials.json` or `token.json`. Both are listed in `.gitignore`.
+
+#### 4. First Run - Authentication
+
+First run opens a browser (or prints a URL) for OAuth. Paste the authorization code when prompted. Later runs reuse `token.json`.
+
+```bash
+pnpm start
+# or
+pnpm migrate
 ```
 
 ### IDE Configuration
@@ -296,17 +344,80 @@ describe('withRetry', () => {
 
 ```bash
 pnpm test
-pnpm test retry.test.ts
+pnpm test:no-coverage
 pnpm test:watch
 pnpm test -- --coverage
 ```
+
+## Available Commands
+
+### Development Commands
+
+**Linting and Formatting:**
+
+```bash
+# Check code style and quality
+pnpm lint
+
+# Fix fixable ESLint issues
+pnpm lint:fix
+
+# Check Prettier formatting
+pnpm prettier
+
+# Fix Prettier formatting issues
+pnpm prettier:fix
+```
+
+**Building:**
+
+```bash
+# Compile TypeScript to JavaScript
+pnpm build
+```
+
+**Testing:**
+
+```bash
+# Run all tests with coverage
+pnpm test
+
+# Run tests without coverage
+pnpm test:no-coverage
+
+# Run tests in watch mode (during development)
+pnpm test:watch
+```
+
+### Running Scripts
+
+**Migration (Recommended):**
+
+```bash
+# Start migration
+pnpm start
+
+# Start migration (alternative)
+pnpm migrate
+```
+
+## Extending the Application
+
+### Adding New Migration Targets
+
+1. **Types** — Extend `src/types/index.ts` if needed.
+2. **Parser** — Add parser in `src/parsers/takeoutCsv.ts`.
+3. **Migrate** — Create migrate file in `src/migrate/`.
+4. **Config** — Add toggle in `src/config.ts`.
+5. **Main** — Call from `src/main.ts`.
+6. **Tests** — Add unit tests.
+7. **Docs** — Update README / INSTRUCTIONS.
 
 ## Deployment
 
 ### Building for Production
 
 ```bash
-rm -rf dist/
 pnpm build
 node dist/main.js
 ```
@@ -397,7 +508,7 @@ Do not paste logs containing access tokens online.
 2. **API changes** — Monitor YouTube Data API revision notes
 3. **Documentation** — Keep INSTRUCTIONS aligned with `src/` layout
 
-## Additional Resources
+## External Resources
 
 - [YouTube Data API Overview](https://developers.google.com/youtube/v3)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
@@ -412,3 +523,15 @@ Do not paste logs containing access tokens online.
 3. Reach out to maintainers
 
 Happy coding.
+
+## Author
+
+- **Or Assayag** - _Initial work_ - [orassayag](https://github.com/orassayag)
+- Or Assayag <orassayag@gmail.com>
+- GitHub: https://github.com/orassayag
+- StackOverflow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
+- LinkedIn: https://linkedin.com/in/orassayag
+
+## Last Updated
+
+June 2026

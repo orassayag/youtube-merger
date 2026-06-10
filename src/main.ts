@@ -5,12 +5,14 @@
  */
 import * as fs from 'node:fs';
 import { google } from 'googleapis';
-import { CONFIG } from './config.js';
-import { authenticate } from './auth/oauth.js';
-import { parseSubscriptions } from './parsers/takeoutCsv.js';
-import { migrateSubscriptions } from './migrate/subscriptions.js';
-import { migratePlaylists } from './migrate/playlists.js';
-import { migrateLikedVideos } from './migrate/likedVideos.js';
+import { CONFIG } from './index.js';
+import { authenticate } from './auth/index.js';
+import { parseSubscriptions } from './parsers/index.js';
+import {
+  migrateSubscriptions,
+  migratePlaylists,
+  migrateLikedVideos,
+} from './migrate/index.js';
 
 async function main(): Promise<void> {
   console.log('🚀 YouTube Takeout Migration\n');

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { withRetry, delay } from '../retry.js';
+import { withRetry, delay } from '../index.js';
 
 describe('retry utils', () => {
   beforeEach(() => {
@@ -48,7 +48,9 @@ describe('retry utils', () => {
       const r = await promise;
       expect(r).toEqual({ status: 'success', data: 'ok' });
       expect(calls).toBe(2);
-      expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('Quota exceeded'));
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Quota exceeded')
+      );
     });
 
     it('retries on generic error after 2s', async () => {
@@ -91,7 +93,9 @@ describe('retry utils', () => {
       await vi.runAllTimersAsync();
       const r = await promise;
       expect(r.status).toBe('failed');
-      expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('string error'));
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining('string error')
+      );
     });
 
     it('handles null/undefined response in getErrorStatus', async () => {

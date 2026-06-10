@@ -1,0 +1,4 @@
+{
+  "project": ["src/**/*.ts", "src/original-code/*.ts"],
+  "ignore": ["src/original-code/*.ts"]
+}

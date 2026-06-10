@@ -1,6 +1,6 @@
 import type { youtube_v3 } from 'googleapis';
-import { CONFIG } from '../config.js';
-import { delay, withRetry } from '../api/retry.js';
+import { CONFIG } from '../index.js';
+import { delay, withRetry } from '../api/index.js';
 import type { Subscription } from '../types/index.js';
 
 export async function migrateSubscriptions(
@@ -45,5 +45,7 @@ export async function migrateSubscriptions(
     await delay(CONFIG.rateLimitDelay);
   }
 
-  console.log(`\n  Subscriptions: ${success} added, ${skipped} skipped, ${failed} failed`);
+  console.log(
+    `\n  Subscriptions: ${success} added, ${skipped} skipped, ${failed} failed`
+  );
 }

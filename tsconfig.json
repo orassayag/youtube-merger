@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "Node16",
     "lib": ["ES2022"],
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -22,8 +22,9 @@
       "@types/*": ["./src/types/*"],
       "@core/*": ["./src/core/*"],
       "@utils/*": ["./src/utils/*"]
-    }
+    },
+    "types": ["node", "vitest"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "src/original-code"]
 }

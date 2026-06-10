@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { migrateLikedVideos } from '../likedVideos.js';
-import { withRetry } from '../../api/retry.js';
-import { parseLikedVideos } from '../../parsers/takeoutCsv.js';
+import { migrateLikedVideos } from '../index.js';
+import { withRetry } from '../../api/index.js';
+import { parseLikedVideos } from '../../parsers/index.js';
 import type { ApiResult } from '../../types/index.js';
 
 vi.mock('../../api/retry.js', async (importOriginal) => {
@@ -36,12 +36,16 @@ describe('migrateLikedVideos', () => {
 
   it('migrates liked videos successfully', async () => {
     vi.mocked(parseLikedVideos).mockReturnValue(['v1', 'v2']);
-    vi.mocked(withRetry).mockResolvedValue({ status: 'success' } as ApiResult<unknown>);
+    vi.mocked(withRetry).mockResolvedValue({
+      status: 'success',
+    } as ApiResult<unknown>);
 
     await migrateLikedVideos(mockYoutube);
 
     expect(withRetry).toHaveBeenCalledTimes(2);
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('2/2 videos liked'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('2/2 videos liked')
+    );
   });
 
   it('handles no liked videos', async () => {
@@ -49,7 +53,9 @@ describe('migrateLikedVideos', () => {
 
     await migrateLikedVideos(mockYoutube);
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('No liked videos to migrate'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('No liked videos to migrate')
+    );
   });
 
   it('handles duplicates and failures', async () => {

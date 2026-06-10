@@ -55,9 +55,15 @@ interface Subscription {
 // ─── AUTH ──────────────────────────────────────────────────────────────────────
 
 async function authenticate(): Promise<OAuth2Client> {
-  const credentials = JSON.parse(fs.readFileSync(CONFIG.credentialsPath, 'utf-8'));
+  const credentials = JSON.parse(
+    fs.readFileSync(CONFIG.credentialsPath, 'utf-8')
+  );
   const { client_secret, client_id, redirect_uris } = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  const oAuth2Client = new google.auth.OAuth2(
+    client_id,
+    client_secret,
+    redirect_uris[0]
+  );
 
   // Use saved token if available
   if (fs.existsSync(CONFIG.tokenPath)) {
@@ -80,7 +86,10 @@ async function authenticate(): Promise<OAuth2Client> {
   console.log(authUrl);
   console.log();
 
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
   const code = await new Promise<string>((resolve) =>
     rl.question('Enter the authorization code from that page: ', (ans) => {
       rl.close();
@@ -100,7 +109,11 @@ async function authenticate(): Promise<OAuth2Client> {
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-async function withRetry<T>(fn: () => Promise<T>, label: string, retries = 3): Promise<T | null> {
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  label: string,
+  retries = 3
+): Promise<T | null> {
   for (let i = 0; i < retries; i++) {
     try {
       return await fn();
@@ -114,7 +127,9 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, retries = 3): P
         console.warn(`⚠️  Quota exceeded on "${label}". Waiting 60s...`);
         await delay(60000);
       } else {
-        console.warn(`⚠️  Error on "${label}" (attempt ${i + 1}): ${err.message}`);
+        console.warn(
+          `⚠️  Error on "${label}" (attempt ${i + 1}): ${err.message}`
+        );
         await delay(2000);
       }
     }
@@ -126,7 +141,11 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, retries = 3): P
 // ─── SUBSCRIPTIONS ─────────────────────────────────────────────────────────────
 
 function parseSubscriptions(): Subscription[] {
-  const csvPath = path.join(CONFIG.takeoutPath, 'subscriptions', 'subscriptions.csv');
+  const csvPath = path.join(
+    CONFIG.takeoutPath,
+    'subscriptions',
+    'subscriptions.csv'
+  );
   if (!fs.existsSync(csvPath)) {
     console.warn('⚠️  subscriptions.csv not found at:', csvPath);
     return [];
@@ -142,7 +161,10 @@ function parseSubscriptions(): Subscription[] {
   }));
 }
 
-async function migrateSubscriptions(youtube: youtube_v3.Youtube, subscriptions: Subscription[]) {
+async function migrateSubscriptions(
+  youtube: youtube_v3.Youtube,
+  subscriptions: Subscription[]
+) {
   console.log(`\n📋 Migrating ${subscriptions.length} subscriptions...`);
   let success = 0,
     skipped = 0,
@@ -179,7 +201,9 @@ async function migrateSubscriptions(youtube: youtube_v3.Youtube, subscriptions: 
     await delay(CONFIG.rateLimitDelay);
   }
 
-  console.log(`\n  Subscriptions: ${success} added, ${skipped} skipped, ${failed} failed`);
+  console.log(
+    `\n  Subscriptions: ${success} added, ${skipped} skipped, ${failed} failed`
+  );
 }
 
 // ─── PLAYLISTS ─────────────────────────────────────────────────────────────────
@@ -198,14 +222,21 @@ function parsePlaylists(): Map<string, string[]> {
 
   for (const file of files) {
     // Skip liked videos and watch later (handled separately)
-    if (file.toLowerCase().includes('liked') || file.toLowerCase().includes('watch-later'))
+    if (
+      file.toLowerCase().includes('liked') ||
+      file.toLowerCase().includes('watch-later')
+    )
       continue;
 
     const playlistName = path.basename(file, '.csv');
     const content = fs.readFileSync(path.join(playlistsDir, file), 'utf-8');
 
     try {
-      const records = parse(content, { columns: true, skip_empty_lines: true, from_line: 4 });
+      const records = parse(content, {
+        columns: true,
+        skip_empty_lines: true,
+        from_line: 4,
+      });
       const videoIds = records
         .map((r: any) => r['Video Id'] || r['video_id'] || r['videoId'])
         .filter(Boolean);
@@ -218,8 +249,14 @@ function parsePlaylists(): Map<string, string[]> {
   return result;
 }
 
-async function migratePlaylist(youtube: youtube_v3.Youtube, name: string, videoIds: string[]) {
-  console.log(`\n  📁 Creating playlist "${name}" (${videoIds.length} videos)...`);
+async function migratePlaylist(
+  youtube: youtube_v3.Youtube,
+  name: string,
+  videoIds: string[]
+) {
+  console.log(
+    `\n  📁 Creating playlist "${name}" (${videoIds.length} videos)...`
+  );
 
   // Create the playlist
   const playlist = await withRetry(
@@ -227,7 +264,10 @@ async function migratePlaylist(youtube: youtube_v3.Youtube, name: string, videoI
       youtube.playlists.insert({
         part: ['snippet', 'status'],
         requestBody: {
-          snippet: { title: name, description: `Imported from YouTube Takeout` },
+          snippet: {
+            title: name,
+            description: `Imported from YouTube Takeout`,
+          },
           status: { privacyStatus: 'private' },
         },
       }),
@@ -281,7 +321,9 @@ async function migratePlaylists(youtube: youtube_v3.Youtube) {
 
 function parseLikedVideos(): string[] {
   const playlistsDir = path.join(CONFIG.takeoutPath, 'playlists');
-  const likedFile = fs.readdirSync(playlistsDir).find((f) => f.toLowerCase().includes('liked'));
+  const likedFile = fs
+    .readdirSync(playlistsDir)
+    .find((f) => f.toLowerCase().includes('liked'));
 
   if (!likedFile) {
     console.warn('⚠️  Liked videos CSV not found');
@@ -290,8 +332,14 @@ function parseLikedVideos(): string[] {
 
   const content = fs.readFileSync(path.join(playlistsDir, likedFile), 'utf-8');
   try {
-    const records = parse(content, { columns: true, skip_empty_lines: true, from_line: 4 });
-    return records.map((r: any) => r['Video Id'] || r['video_id'] || r['videoId']).filter(Boolean);
+    const records = parse(content, {
+      columns: true,
+      skip_empty_lines: true,
+      from_line: 4,
+    });
+    return records
+      .map((r: any) => r['Video Id'] || r['video_id'] || r['videoId'])
+      .filter(Boolean);
   } catch {
     return [];
   }

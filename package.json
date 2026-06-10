@@ -1,9 +1,8 @@
 {
   "name": "youtube-merger",
   "version": "1.0.0",
-  "type": "module",
-  "private": true,
-  "description": "A TypeScript CLI tool that migrates YouTube subscriptions, playlists, and liked videos from Google Takeout CSV exports to another account using the YouTube Data API v3, with OAuth2, rate-limit-aware retries, and configurable sections",
+  "private": false,
+  "description": "A TypeScript CLI migrating YouTube subscriptions, playlists and liked videos from Google Takeout export to target account using YouTube Data API version v3, OAuth 2.0 desktop, rate-limit retries, configurable sections, it Reads CSVs to batch-import subs, recreate playlists, like videos, quotas",
   "keywords": [
     "youtube",
     "takeout",
@@ -17,35 +16,74 @@
     "playlists",
     "subscriptions"
   ],
-  "author": "Or Assayag",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/orassayag/youtube-merger"
-  },
+  "homepage": "https://github.com/orassayag/youtube-merger#readme",
   "bugs": {
     "url": "https://github.com/orassayag/youtube-merger/issues"
   },
-  "homepage": "https://github.com/orassayag/youtube-merger#readme",
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/orassayag/youtube-merger.git"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/orassayag"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Or Assayag",
+    "email": "orassayag@gmail.com",
+    "url": "https://github.com/orassayag"
+  },
+  "contributors": [
+    {
+      "name": "Or Assayag",
+      "email": "orassayag@gmail.com",
+      "url": "https://github.com/orassayag"
+    }
+  ],
+  "type": "module",
+  "main": "src/main.ts",
+  "files": [
+    ".github",
+    ".pnpm-store",
+    ".vscode",
+    "dist",
+    "src",
+    ".eslintignore",
+    ".gitignore",
+    ".npmrc",
+    ".prettierrc",
+    ".prettierrc.json",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "eslint.config.mjs",
+    "INSTRUCTIONS.md",
+    "knip.json",
+    "LICENSE",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "README.md",
+    "SECURITY.md",
+    "tsconfig.json",
+    "tsconfig.node.json",
+    "vitest.config.ts"
+  ],
   "scripts": {
-    "start": "tsx src/main.ts",
-    "migrate": "tsx src/main.ts",
     "build": "tsc",
-    "test": "cross-env NODE_OPTIONS='--no-warnings' vitest run --coverage",
-    "test:watch": "cross-env NODE_OPTIONS='--no-warnings' vitest",
-    "test:no-coverage": "cross-env NODE_OPTIONS='--no-warnings' vitest run",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
+    "migrate": "tsx src/main.ts",
     "prettier": "prettier --check \"src/**/*.ts\"",
-    "prettier:fix": "prettier --write \"src/**/*.ts\""
+    "prettier:fix": "prettier --write \"src/**/*.ts\"",
+    "start": "tsx src/main.ts",
+    "test": "cross-env NODE_OPTIONS='--no-warnings' vitest run --coverage",
+    "test:no-coverage": "cross-env NODE_OPTIONS='--no-warnings' vitest run",
+    "test:watch": "cross-env NODE_OPTIONS='--no-warnings' vitest"
   },
   "dependencies": {
     "csv-parse": "^6.2.1",
-    "google-auth-library": "^10.7.0",
     "googleapis": "^173.0.0"
   },
   "devDependencies": {
@@ -56,9 +94,15 @@
     "@vitest/ui": "^4.1.8",
     "cross-env": "^10.1.0",
     "eslint": "^10.4.1",
-    "prettier": "^3.8.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.4",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
     "vitest": "^4.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
   }
 }

@@ -1,3 +1,17 @@
 {
-  "cSpell.words": ["Assayag", "bookmd", "maxtimeout", "mintimeout", "nvid", "orassayag"]
+  "cSpell.words": [
+    "Assayag",
+    "bookmd",
+    "maxtimeout",
+    "mintimeout",
+    "nvid",
+    "orassayag"
+  ],
+  "cSpell.ignorePaths": [
+    "coverage",
+    "node_modules",
+    "dist",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
+  ]
 }

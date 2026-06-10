@@ -40,7 +40,9 @@ export async function withRetry<T>(
         await delay(60000);
         continue;
       }
-      console.warn(`⚠️  Error on "${label}" (attempt ${i + 1}): ${getErrorMessage(err)}`);
+      console.warn(
+        `⚠️  Error on "${label}" (attempt ${i + 1}): ${getErrorMessage(err)}`
+      );
       await delay(2000);
     }
   }

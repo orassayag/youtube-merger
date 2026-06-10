@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { migrateSubscriptions } from '../subscriptions.js';
-import { withRetry } from '../../api/retry.js';
+import { migrateSubscriptions } from '../index.js';
+import { withRetry } from '../../api/index.js';
 import type { ApiResult } from '../../types/index.js';
 
 // Mock the retry module to avoid real delays
@@ -38,7 +38,10 @@ describe('migrateSubscriptions', () => {
       { channelId: 'UC2', channelTitle: 'Chan 2', channelUrl: 'url2' },
     ];
 
-    vi.mocked(withRetry).mockResolvedValue({ status: 'success', data: {} } as ApiResult<unknown>);
+    vi.mocked(withRetry).mockResolvedValue({
+      status: 'success',
+      data: {},
+    } as ApiResult<unknown>);
 
     await migrateSubscriptions(mockYoutube, subscriptions);
 
@@ -49,9 +52,13 @@ describe('migrateSubscriptions', () => {
   });
 
   it('handles duplicates', async () => {
-    const subscriptions = [{ channelId: 'UC1', channelTitle: 'Chan 1', channelUrl: 'url1' }];
+    const subscriptions = [
+      { channelId: 'UC1', channelTitle: 'Chan 1', channelUrl: 'url1' },
+    ];
 
-    vi.mocked(withRetry).mockResolvedValue({ status: 'duplicate' } as ApiResult<unknown>);
+    vi.mocked(withRetry).mockResolvedValue({
+      status: 'duplicate',
+    } as ApiResult<unknown>);
 
     await migrateSubscriptions(mockYoutube, subscriptions);
 
@@ -61,7 +68,9 @@ describe('migrateSubscriptions', () => {
   });
 
   it('handles failures', async () => {
-    const subscriptions = [{ channelId: 'UC1', channelTitle: 'Chan 1', channelUrl: 'url1' }];
+    const subscriptions = [
+      { channelId: 'UC1', channelTitle: 'Chan 1', channelUrl: 'url1' },
+    ];
 
     vi.mocked(withRetry).mockResolvedValue({
       status: 'failed',

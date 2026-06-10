@@ -3,7 +3,11 @@ import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { parseSubscriptions, parsePlaylists, parseLikedVideos } from '../takeoutCsv.js';
+import {
+  parseSubscriptions,
+  parsePlaylists,
+  parseLikedVideos,
+} from '../index.js';
 
 describe('takeoutCsv parsers', () => {
   let root: string;
@@ -62,8 +66,14 @@ describe('takeoutCsv parsers', () => {
       const header = 'x\nx\nx\n';
       const csvBody = 'Video Id\nvid1\n';
       writeFileSync(join(playlistsDir, 'My PL.csv'), header + csvBody);
-      writeFileSync(join(playlistsDir, 'liked videos.csv'), header + 'Video Id\nv99\n');
-      writeFileSync(join(playlistsDir, 'watch-later.csv'), header + 'Video Id\nv98\n');
+      writeFileSync(
+        join(playlistsDir, 'liked videos.csv'),
+        header + 'Video Id\nv99\n'
+      );
+      writeFileSync(
+        join(playlistsDir, 'watch-later.csv'),
+        header + 'Video Id\nv98\n'
+      );
 
       const map = parsePlaylists(root);
       expect(map.size).toBe(1);
@@ -85,7 +95,10 @@ describe('takeoutCsv parsers', () => {
       const playlistsDir = join(root, 'playlists');
       mkdirSync(playlistsDir, { recursive: true });
       // This will fail because it expect columns but won't find them if there is no data at line 4
-      writeFileSync(join(playlistsDir, 'bad.csv'), 'line1\nline2\nline3\ncol1,col2\ndata');
+      writeFileSync(
+        join(playlistsDir, 'bad.csv'),
+        'line1\nline2\nline3\ncol1,col2\ndata'
+      );
 
       parsePlaylists(root);
       // It might still create an entry if parse doesn't throw, but with empty/wrong data.

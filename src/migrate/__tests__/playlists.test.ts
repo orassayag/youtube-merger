@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { migratePlaylists } from '../playlists.js';
-import { withRetry } from '../../api/retry.js';
-import { parsePlaylists } from '../../parsers/takeoutCsv.js';
+import { migratePlaylists } from '../index.js';
+import { withRetry } from '../../api/index.js';
+import { parsePlaylists } from '../../parsers/index.js';
 import type { ApiResult } from '../../types/index.js';
 
 vi.mock('../../api/retry.js', async (importOriginal) => {
@@ -55,7 +55,9 @@ describe('migratePlaylists', () => {
     await migratePlaylists(mockYoutube);
 
     expect(withRetry).toHaveBeenCalledTimes(3); // 1 create + 2 add
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('"PL1": 2/2 videos added'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('"PL1": 2/2 videos added')
+    );
   });
 
   it('handles no playlists', async () => {
@@ -63,7 +65,9 @@ describe('migratePlaylists', () => {
 
     await migratePlaylists(mockYoutube);
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringContaining('No playlists to migrate'));
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('No playlists to migrate')
+    );
   });
 
   it('handles playlist creation failure', async () => {
@@ -91,7 +95,10 @@ describe('migratePlaylists', () => {
         status: 'success',
         data: { data: { id: 'pl_id' } },
       } as ApiResult<unknown>)
-      .mockResolvedValueOnce({ status: 'success', data: {} } as ApiResult<unknown>)
+      .mockResolvedValueOnce({
+        status: 'success',
+        data: {},
+      } as ApiResult<unknown>)
       .mockResolvedValueOnce({ status: 'duplicate' } as ApiResult<unknown>)
       .mockResolvedValueOnce({
         status: 'failed',
