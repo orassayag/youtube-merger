@@ -83,7 +83,7 @@
     "test:watch": "cross-env NODE_OPTIONS='--no-warnings' vitest"
   },
   "dependencies": {
-    "csv-parse": "^6.2.1",
+    "csv-parse": "^7.0.0",
     "googleapis": "^173.0.0"
   },
   "devDependencies": {
