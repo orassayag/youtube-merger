@@ -87,7 +87,7 @@
     "googleapis": "^173.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.1",
     "@typescript-eslint/eslint-plugin": "^8.63.0",
     "@typescript-eslint/parser": "^8.63.0",
     "@vitest/coverage-istanbul": "^4.1.10",
@@ -97,7 +97,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.4",
     "tsx": "^4.23.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "typescript-eslint": "^8.63.0",
     "vitest": "^4.1.10"
   },
