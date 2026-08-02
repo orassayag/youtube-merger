@@ -15,3 +15,5 @@ minimumReleaseAgeExclude:
   - prettier@3.9.6
   - eslint@10.8.0
   - '@types/node@26.1.2'
+  - csv-parse@7.0.2
+  - tsx@4.23.4
