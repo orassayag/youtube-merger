@@ -84,12 +84,12 @@
   },
   "dependencies": {
     "csv-parse": "^7.0.2",
-    "googleapis": "^173.0.0"
+    "googleapis": "^174.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
-    "@typescript-eslint/eslint-plugin": "^8.65.0",
-    "@typescript-eslint/parser": "^8.65.0",
+    "@typescript-eslint/eslint-plugin": "^8.66.0",
+    "@typescript-eslint/parser": "^8.66.0",
     "@vitest/coverage-istanbul": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "cross-env": "^10.1.0",
@@ -98,7 +98,7 @@
     "prettier": "^3.9.6",
     "tsx": "^4.23.5",
     "typescript": "^7.0.2",
-    "typescript-eslint": "^8.65.0",
+    "typescript-eslint": "^8.66.0",
     "vitest": "^4.1.10"
   },
   "engines": {
