@@ -16,5 +16,5 @@ minimumReleaseAgeExclude:
   - eslint@10.8.0
   - '@types/node@26.1.2'
   - csv-parse@7.0.2
-  - tsx@4.23.4 || 4.23.5 || 4.23.6
-  - googleapis@174.0.0
+  - tsx@4.23.4 || 4.23.5 || 4.23.6 || 4.23.8
+  - googleapis@174.0.0 || 174.0.1
