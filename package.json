@@ -87,7 +87,7 @@
     "googleapis": "^176.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.3.0",
+    "@types/node": "^26.4.0",
     "@typescript-eslint/eslint-plugin": "^8.68.0",
     "@typescript-eslint/parser": "^8.68.0",
     "@vitest/coverage-istanbul": "^4.1.11",
