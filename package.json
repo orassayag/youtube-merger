@@ -84,22 +84,22 @@
   },
   "dependencies": {
     "csv-parse": "^7.0.2",
-    "googleapis": "^176.0.0"
+    "googleapis": "^181.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.68.0",
-    "@typescript-eslint/parser": "^8.68.0",
-    "@vitest/coverage-istanbul": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
+    "@types/node": "^26.6.2",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
+    "@vitest/coverage-istanbul": "^5.0.1",
+    "@vitest/ui": "^5.0.1",
     "cross-env": "^10.1.0",
-    "eslint": "^10.9.1",
+    "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.6",
-    "tsx": "^4.23.12",
+    "prettier": "^3.9.8",
+    "tsx": "^4.23.13",
     "typescript": "^7.0.2",
-    "typescript-eslint": "^8.68.0",
-    "vitest": "^4.1.11"
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.1"
   },
   "engines": {
     "node": ">=20.0.0",
