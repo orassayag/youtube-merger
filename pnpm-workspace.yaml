@@ -1,5 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@types/node@26.6.2'
-  - eslint@10.11.0
+  - tsx@4.23.15
