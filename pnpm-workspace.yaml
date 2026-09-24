@@ -1,4 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - prettier@3.9.9
+  - googleapis@182.0.0

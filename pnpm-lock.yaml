@@ -12,8 +12,8 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
       googleapis:
-        specifier: ^181.0.0
-        version: 181.0.0(supports-color@7.2.0)
+        specifier: ^182.0.0
+        version: 182.0.0(supports-color@7.2.0)
     devDependencies:
       '@types/node':
         specifier: ^26.6.2
@@ -1007,10 +1007,6 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  gaxios@7.1.4:
-    resolution: {integrity: sha512-bTIgTsM2bWn3XklZISBTQX7ZSddGW+IO3bMdGaemHZ3tbqExMENHLx6kKZ/KlejgrMtj8q7wBItt51yegqalrA==}
-    engines: {node: '>=18'}
-
   gaxios@7.3.1:
     resolution: {integrity: sha512-kB3rzJV7d9juLZh8/56QTXCwQfxyhdOMdyYk1HdQKFtF8TJTDTZQJtixWIwXdE9Jji91mC41DUNpjleo4L4eAQ==}
     engines: {node: '>=18'}
@@ -1047,8 +1043,8 @@ packages:
     resolution: {integrity: sha512-UJBElspYPJb0+fI8q0LxARw1hPnwd9yd5NqhKqEUPxjhnB1jdsRP7rlRTBp69JS5Vo10bCiRE9+ISsIG2A+Ttg==}
     engines: {node: '>=22'}
 
-  googleapis@181.0.0:
-    resolution: {integrity: sha512-fCzsqaVjA5FrA9DdXn4WlnmnLUvqjWx0JGZzcHbSC9iMfb8PK1lTxsvYpnaRf0j4b6usfKlW+YHSKjHnkgqmjQ==}
+  googleapis@182.0.0:
+    resolution: {integrity: sha512-W8K/yy5kb1j6TiKEtSj4I4DgjeImVfSzYmdmp8Bdn3dHBamBjmpJUteF0R7QQ9Ym++2Yq+ZYXvIFBC7ywBohAA==}
     engines: {node: '>=22.0.0'}
 
   gopd@1.2.0:
@@ -2417,14 +2413,6 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  gaxios@7.1.4(supports-color@7.2.0):
-    dependencies:
-      extend: 3.0.2
-      https-proxy-agent: 7.0.6(supports-color@7.2.0)
-      node-fetch: 3.3.2
-    transitivePeerDependencies:
-      - supports-color
-
   gaxios@7.3.1(supports-color@7.2.0):
     dependencies:
       extend: 3.0.2
@@ -2435,7 +2423,7 @@ snapshots:
 
   gcp-metadata@9.0.4(supports-color@7.2.0):
     dependencies:
-      gaxios: 7.1.4(supports-color@7.2.0)
+      gaxios: 7.3.1(supports-color@7.2.0)
       google-logging-utils: 2.0.1
       json-bigint: 1.0.0
     transitivePeerDependencies:
@@ -2469,7 +2457,7 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
-      gaxios: 7.1.4(supports-color@7.2.0)
+      gaxios: 7.3.1(supports-color@7.2.0)
       gcp-metadata: 9.0.4(supports-color@7.2.0)
       google-logging-utils: 2.0.1
       jws: 4.0.1
@@ -2489,7 +2477,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis@181.0.0(supports-color@7.2.0):
+  googleapis@182.0.0(supports-color@7.2.0):
     dependencies:
       google-auth-library: 11.1.0(supports-color@7.2.0)
       googleapis-common: 9.1.0(supports-color@7.2.0)
