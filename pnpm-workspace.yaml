@@ -1,4 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - googleapis@184.0.0
+  - googleapis@185.0.0
