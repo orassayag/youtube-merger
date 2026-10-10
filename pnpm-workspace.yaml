@@ -1,4 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@types/node@26.6.5'
+  - prettier@3.9.10
