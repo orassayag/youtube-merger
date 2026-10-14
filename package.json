@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "csv-parse": "^7.0.3",
-    "googleapis": "^185.0.0"
+    "googleapis": "^186.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",
